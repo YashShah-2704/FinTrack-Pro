@@ -74,8 +74,48 @@ const getDashboardAnalytics = async (userId) => {
 
 };
 
+const getCategoryAnalytics = async (userId) => {
+
+    const categorySummary = await Transaction.aggregate([
+
+        {
+            $match: {
+                user: new mongoose.Types.ObjectId(userId)
+            }
+        },
+
+        {
+            $group: {
+
+                _id: "$category",
+
+                totalAmount: {
+                    $sum: "$amount"
+                },
+
+                totalTransactions: {
+                    $sum: 1
+                }
+
+            }
+
+        },
+
+        {
+            $sort: {
+                totalAmount: -1
+            }
+        }
+
+    ]);
+
+    return categorySummary;
+
+};
+
 module.exports = {
 
-    getDashboardAnalytics
+    getDashboardAnalytics,
+    getCategoryAnalytics
 
 };
