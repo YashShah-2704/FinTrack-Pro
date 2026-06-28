@@ -1,51 +1,15 @@
-const express=require("express");
-const Transaction = require("../models/Transaction");
-const auth=require("../middleware/auth");
+const express = require("express");
 
-const router=express.Router();
+const auth = require("../middleware/auth");
 
-router.post("/",auth,async(req,res)=>{
+const {
 
-    try{
-        const {
-            type,
-            amount,
-            category,
-            note,
-            paymentMethod,
-            transactionDate,
-        } = req.body;
+    addTransaction
 
-        //Validation
-        if(!type||!amount||!category){
-            return res.status(400).json({
-                message:"Type,amount and category are required."
-            });
-        }
+} = require("../controllers/transactionController");
 
-        const transaction=await Transaction.create({
-            user: req.user.id,
-            type,
-            amount,
-            category,
-            note,
-            paymentMethod,
-            transactionDate
-        });
+const router = express.Router();
 
-        res.status(201).json({
-            message:"Transaction added successfully",
-            transaction
-        });
+router.post("/", auth, addTransaction);
 
-
-    }
-    catch(error){
-        res.status(500).json({
-            message: error.message
-        });
-    }
-
-});
-
-module.exports=router;
+module.exports = router;
