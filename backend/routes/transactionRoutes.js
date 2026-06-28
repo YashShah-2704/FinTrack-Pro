@@ -4,11 +4,14 @@ const auth = require("../middleware/auth");
 
 const {
 
-    addTransaction
+    addTransaction,
+    getTransactions
 
 } = require("../controllers/transactionController");
 
 const router = express.Router();
+
+router.get("/",auth,getTransactions);
 
 router.post("/", auth, addTransaction);
 
