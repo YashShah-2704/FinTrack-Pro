@@ -5,6 +5,7 @@ import Register from "../pages/Register";
 import Dashboard from "../pages/Dashboard";
 import Transactions from "../pages/Transactions";
 import Profile from "../pages/Profile";
+import ProtectedRoute from "./ProtectedRoute";
 
 function AppRoutes() {
     return (
@@ -16,11 +17,53 @@ function AppRoutes() {
 
             <Route path="/register" element={<Register />} />
 
-            <Route path="/dashboard" element={<Dashboard />} />
+            <Route
 
-            <Route path="/transactions" element={<Transactions />} />
+            path="/dashboard"
 
-            <Route path="/profile" element={<Profile />} />
+            element={
+
+            <ProtectedRoute>
+
+            <Dashboard />
+
+            </ProtectedRoute>
+
+            }
+
+            />
+
+            <Route
+
+            path="/transactions"
+
+            element={
+
+            <ProtectedRoute>
+
+            <Transactions />
+
+            </ProtectedRoute>
+
+            }
+
+            />
+
+            <Route
+
+            path="/profile"
+
+            element={
+
+            <ProtectedRoute>
+
+            <Profile/>
+
+            </ProtectedRoute>
+
+            }
+
+            />
 
         </Routes>
     );
