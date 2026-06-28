@@ -4,6 +4,7 @@ const dotenv=require("dotenv");
 const connectDB = require("./config/db");
 const authRoutes = require("./routes/authRoutes");
 const transactionRoutes=require("./routes/transactionRoutes");
+const analyticsRoutes =require("./routes/analyticsRoutes");
 
 dotenv.config();
 
@@ -20,6 +21,8 @@ app.use(express.json());
 app.use("/api/auth",authRoutes);
 
 app.use("/api/transactions",transactionRoutes);
+
+app.use("/api/analytics", analyticsRoutes);
 
 app.get("/", (req, res) => {
   res.send("Expense Tracker API is running");
