@@ -111,9 +111,73 @@ const getTransactions = async(req,res)=>{
     }
 };
 
+// Update Transaction
+
+const updateTransaction = async (req, res) => {
+
+    try {
+
+        const transaction = await Transaction.findById(req.params.id);
+
+        if (!transaction) {
+
+            return res.status(404).json({
+                success: false,
+                message: "Transaction not found"
+            });
+
+        }
+
+        // Check ownership
+        if (transaction.user.toString() !== req.user.id) {
+
+            return res.status(403).json({
+                success: false,
+                message: "You are not authorized to update this transaction"
+            });
+
+        }
+
+        const {
+            type,
+            amount,
+            category,
+            note,
+            paymentMethod,
+            transactionDate
+        } = req.body;
+
+        transaction.type = type ?? transaction.type;
+        transaction.amount = amount ?? transaction.amount;
+        transaction.category = category ?? transaction.category;
+        transaction.note = note ?? transaction.note;
+        transaction.paymentMethod = paymentMethod ?? transaction.paymentMethod;
+        transaction.transactionDate = transactionDate ?? transaction.transactionDate;
+
+        await transaction.save();
+
+        res.status(200).json({
+            success: true,
+            message: "Transaction updated successfully",
+            transaction
+        });
+
+    }
+    catch (error) {
+
+        res.status(500).json({
+            success: false,
+            message: error.message
+        });
+
+    }
+
+};
+
 module.exports = {
 
     addTransaction,
-    getTransactions
+    getTransactions,
+    updateTransaction
 
 };
