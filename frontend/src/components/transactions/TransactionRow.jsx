@@ -1,6 +1,7 @@
 function TransactionRow({
 
-    transaction
+    transaction,
+    onEdit
 
 }) {
 
@@ -42,7 +43,7 @@ function TransactionRow({
 
             <td>
 
-                <button>
+                <button onClick={()=> onEdit(transaction)}>
 
                     Edit
 

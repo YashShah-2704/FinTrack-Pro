@@ -9,6 +9,7 @@ import RecentTransactions from "../components/dashboard/RecentTransactions";
 import CategoryPieChart from "../components/dashboard/CategoryPieChart";
 
 import MonthlyChart from "../components/dashboard/MonthlyChart";
+import MainLayout from "../components/layout/MainLayout";
 
 import {
 
@@ -68,6 +69,7 @@ function Dashboard() {
         return <h2>{error}</h2>;
 
     return (
+        <MainLayout>
 
         <div style={{ padding: "30px" }}>
 
@@ -134,6 +136,8 @@ function Dashboard() {
 />
 
         </div>
+
+        </MainLayout>
 
     );
 

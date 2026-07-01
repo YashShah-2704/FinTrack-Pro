@@ -2,7 +2,8 @@ import TransactionRow from "./TransactionRow";
 
 function TransactionTable({
 
-    transactions
+    transactions,
+    onEdit
 
 }) {
 
@@ -57,6 +58,8 @@ function TransactionTable({
                                 key={transaction._id}
 
                                 transaction={transaction}
+
+                                onEdit={onEdit}
 
                             />
 

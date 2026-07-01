@@ -2,14 +2,26 @@ import { useEffect, useState } from "react";
 
 import {
 
-    getTransactions
+    getTransactions,
+    addTransaction,
+    updateTransaction
 
 } from "../services/transactionService";
 
-import TransactionTable
-from "../components/transactions/TransactionTable";
+import TransactionTable from "../components/transactions/TransactionTable";
+
+import TransactionModal from "../components/transactions/TransactionModal";
+
+import DeleteModal from "../components/transactions/DeleteModal";
+import { deleteTransaction } from "../services/transactionService";
 
 function Transactions() {
+
+    const [showModal, setShowModal] = useState(false);
+
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
+
+    const [selectedTransaction, setSelectedTransaction] = useState(null);
 
     const [transactions, setTransactions] =
         useState([]);
@@ -53,6 +65,76 @@ function Transactions() {
 
     };
 
+    const handleAddTransaction = async (formData) => {
+
+        try {
+
+            await addTransaction(formData);
+
+            setShowModal(false);
+
+            await loadTransactions();
+
+        }
+
+        catch (err) {
+
+            console.error(err);
+
+        }
+
+    };
+
+    const handleUpdateTransaction = async (formData) => {
+
+        try {
+
+            await updateTransaction(
+
+                selectedTransaction._id,
+
+                formData
+
+            );
+
+            setSelectedTransaction(null);
+
+            setShowModal(false);
+
+            await loadTransactions();
+
+        }
+
+        catch (err) {
+
+            console.error(err);
+
+        }
+
+    };
+
+    const handleDeleteTransaction = async () => {
+
+        try {
+
+            await deleteTransaction(selectedTransaction._id);
+
+            setShowDeleteModal(false);
+
+            setSelectedTransaction(null);
+
+            await loadTransactions();
+
+        }
+
+        catch (err) {
+
+            console.error(err);
+
+        }
+
+    };
+
     if (loading)
         return <h2>Loading...</h2>;
 
@@ -70,10 +152,60 @@ function Transactions() {
                 Transactions
 
             </h1>
+            <button onClick={() => setShowModal(true)}>
+
+                + Add Transaction
+
+            </button>
+
+            <br /><br />
 
             <TransactionTable
 
                 transactions={transactions}
+
+                onEdit={(transaction)=>{
+
+                    setSelectedTransaction(transaction);
+
+                    setShowModal(true);
+
+                }}
+
+                onDelete={(transaction) => {
+
+                    setSelectedTransaction(transaction);
+
+                    setShowDeleteModal(true);
+
+                }}
+
+            />
+
+            <TransactionModal
+
+                open={showModal}
+
+                onClose={() =>{ 
+                    setShowModal(false);
+                    setSelectedTransaction(null);
+                }}
+
+                initialData={selectedTransaction || {}}
+
+                onSubmit={
+
+                    selectedTransaction
+
+                    ?
+
+                    handleUpdateTransaction
+
+                    :
+
+                    handleAddTransaction
+
+                }
 
             />
 
@@ -82,5 +214,6 @@ function Transactions() {
     );
 
 }
+
 
 export default Transactions;
