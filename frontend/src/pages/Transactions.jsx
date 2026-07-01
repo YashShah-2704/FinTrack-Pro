@@ -15,6 +15,7 @@ import TransactionModal from "../components/transactions/TransactionModal";
 import DeleteModal from "../components/transactions/DeleteModal";
 
 import SearchBar from "../components/transactions/SearchBar";
+import FilterBar from "../components/transactions/FilterBar";
 
 import { deleteTransaction } from "../services/transactionService";
 
@@ -30,6 +31,9 @@ function Transactions() {
         useState([]);
 
     const [searchTerm, setSearchTerm] = useState("");
+    const [typeFilter, setTypeFilter] = useState("");
+
+    const [categoryFilter, setCategoryFilter] = useState("");
 
     const [loading, setLoading] =
         useState(true);
@@ -140,21 +144,31 @@ function Transactions() {
 
     };
 
+    const categories = [
+
+        ...new Set(
+
+            transactions.map(
+
+                transaction=>transaction.category
+
+            )
+
+        )
+
+    ];
+
     const filteredTransactions = transactions.filter(
 
         (transaction)=>{
 
-            return (
+            const matchesSearch=
 
                 transaction.category
 
                 .toLowerCase()
 
-                .includes(
-
-                    searchTerm.toLowerCase()
-
-                )
+                .includes(searchTerm.toLowerCase())
 
                 ||
 
@@ -162,11 +176,27 @@ function Transactions() {
 
                 ?.toLowerCase()
 
-                .includes(
+                .includes(searchTerm.toLowerCase());
 
-                    searchTerm.toLowerCase()
+            const matchesType=
 
-                )
+                !typeFilter ||
+
+                transaction.type===typeFilter;
+
+            const matchesCategory=
+
+                !categoryFilter ||
+
+                transaction.category===categoryFilter;
+
+            return(
+
+                matchesSearch &&
+
+                matchesType &&
+
+                matchesCategory
 
             );
 
@@ -224,6 +254,23 @@ function Transactions() {
                     value={searchTerm}
 
                     onChange={setSearchTerm}
+
+                />
+
+            </div>
+            <div className="mt-4 mb-6">
+
+                <FilterBar
+
+                    typeFilter={typeFilter}
+
+                    setTypeFilter={setTypeFilter}
+
+                    categoryFilter={categoryFilter}
+
+                    setCategoryFilter={setCategoryFilter}
+
+                    categories={categories}
 
                 />
 
