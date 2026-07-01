@@ -14,7 +14,7 @@ function FilterBar({
 
     return (
 
-        <div className="flex flex-wrap gap-4">
+        <div className="flex gap-4 flex-wrap">
 
             <select
 
@@ -22,7 +22,7 @@ function FilterBar({
 
                 onChange={(e)=>setTypeFilter(e.target.value)}
 
-                className="border rounded-lg px-4 py-3"
+                className="border border-gray-300 rounded-lg px-4 py-3 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
 
             >
 
@@ -52,7 +52,7 @@ function FilterBar({
 
                 onChange={(e)=>setCategoryFilter(e.target.value)}
 
-                className="border rounded-lg px-4 py-3"
+                className="border border-gray-300 rounded-lg px-4 py-3 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
 
             >
 

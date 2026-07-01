@@ -247,32 +247,37 @@ function Transactions() {
                 </button>
 
             </div>
-            <div className="mb-6">
+            <div className="bg-white rounded-xl shadow-md p-4 mb-6">
 
-                <SearchBar
+                <div className="flex flex-col lg:flex-row gap-4 lg:items-center">
 
-                    value={searchTerm}
+                    <div className="flex-1">
 
-                    onChange={setSearchTerm}
+                        <SearchBar
 
-                />
+                            value={searchTerm}
 
-            </div>
-            <div className="mt-4 mb-6">
+                            onChange={setSearchTerm}
 
-                <FilterBar
+                        />
 
-                    typeFilter={typeFilter}
+                    </div>
 
-                    setTypeFilter={setTypeFilter}
+                    <FilterBar
 
-                    categoryFilter={categoryFilter}
+                        typeFilter={typeFilter}
 
-                    setCategoryFilter={setCategoryFilter}
+                        setTypeFilter={setTypeFilter}
 
-                    categories={categories}
+                        categoryFilter={categoryFilter}
 
-                />
+                        setCategoryFilter={setCategoryFilter}
+
+                        categories={categories}
+
+                    />
+
+                </div>
 
             </div>
 

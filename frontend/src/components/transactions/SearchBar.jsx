@@ -10,7 +10,7 @@ function SearchBar({
 
     return (
 
-        <div className="relative w-full">
+        <div className="relative">
 
             <FaSearch
                 className="absolute top-4 left-4 text-gray-400"
