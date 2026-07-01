@@ -1,135 +1,158 @@
-function RecentTransactions({
-
-    transactions
-
-}) {
+function RecentTransactions({ transactions }) {
 
     return (
 
         <div>
 
-            <h2>
+            <h2 className="text-2xl font-bold mb-6">
 
                 Recent Transactions
 
             </h2>
 
-            <table
-                border="1"
-                cellPadding="10"
-                style={{
-                    width: "100%",
-                    borderCollapse: "collapse"
-                }}
-            >
+            {
 
-                <thead>
+                transactions.length === 0 ?
 
-                    <tr>
+                (
 
-                        <th>Date</th>
+                    <p className="text-gray-500">
 
-                        <th>Category</th>
+                        No Transactions Found
 
-                        <th>Type</th>
+                    </p>
 
-                        <th>Amount</th>
+                )
 
-                    </tr>
+                :
 
-                </thead>
+                (
 
-                <tbody>
+                    <div className="overflow-x-auto">
 
-                    {
+                        <table className="min-w-full">
 
-                        transactions.length === 0 ?
+                            <thead>
 
-                        (
+                                <tr className="border-b">
 
-                            <tr>
+                                    <th className="text-left py-3">
 
-                                <td colSpan="4">
+                                        Date
 
-                                    No Transactions Found
+                                    </th>
 
-                                </td>
+                                    <th className="text-left py-3">
 
-                            </tr>
+                                        Category
 
-                        )
+                                    </th>
 
-                        :
+                                    <th className="text-left py-3">
 
-                        (
+                                        Type
 
-                            transactions.map(
+                                    </th>
 
-                                (transaction) => (
+                                    <th className="text-left py-3">
 
-                                    <tr
-                                        key={transaction._id}
-                                    >
+                                        Amount
 
-                                        <td>
+                                    </th>
 
-                                            {
+                                </tr>
 
-                                                new Date(
+                            </thead>
 
-                                                    transaction.transactionDate
+                            <tbody>
 
-                                                ).toLocaleDateString()
+                                {
 
-                                            }
+                                    transactions.map((transaction)=>(
 
-                                        </td>
+                                        <tr
 
-                                        <td>
+                                            key={transaction._id}
 
-                                            {
+                                            className="border-b hover:bg-gray-50"
 
-                                                transaction.category
+                                        >
 
-                                            }
+                                            <td className="py-4">
 
-                                        </td>
+                                                {
 
-                                        <td>
+                                                    new Date(
 
-                                            {
+                                                        transaction.transactionDate
 
-                                                transaction.type
+                                                    ).toLocaleDateString()
 
-                                            }
+                                                }
 
-                                        </td>
+                                            </td>
 
-                                        <td>
+                                            <td>
 
-                                            ₹
+                                                {
 
-                                            {
+                                                    transaction.category
 
-                                                transaction.amount
+                                                }
 
-                                            }
+                                            </td>
 
-                                        </td>
+                                            <td>
 
-                                    </tr>
+                                                <span
 
-                                )
+                                                    className={`px-3 py-1 rounded-full text-white text-sm
 
-                            )
+                                                    ${transaction.type==="income"
 
-                        )
+                                                    ?
 
-                    }
+                                                    "bg-green-500"
 
-                </tbody>
+                                                    :
 
-            </table>
+                                                    "bg-red-500"
+
+                                                    }`}
+
+                                                >
+
+                                                    {
+
+                                                        transaction.type
+
+                                                    }
+
+                                                </span>
+
+                                            </td>
+
+                                            <td className="font-semibold">
+
+                                                ₹{transaction.amount}
+
+                                            </td>
+
+                                        </tr>
+
+                                    ))
+
+                                }
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                )
+
+            }
 
         </div>
 
