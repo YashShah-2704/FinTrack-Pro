@@ -2,24 +2,27 @@ function SummaryCard({
 
     title,
 
-    value
+    value,
+
+    color
 
 }) {
 
     return (
 
-        <div
-            style={{
-                border: "1px solid #ddd",
-                padding: "20px",
-                borderRadius: "10px",
-                width: "220px"
-            }}
-        >
+        <div className="bg-white rounded-xl shadow-md p-6 flex-1 hover:shadow-xl transition">
 
-            <h3>{title}</h3>
+            <p className="text-gray-500 text-sm">
 
-            <h2>{value}</h2>
+                {title}
+
+            </p>
+
+            <h2 className={`text-3xl font-bold mt-3 ${color}`}>
+
+                {value}
+
+            </h2>
 
         </div>
 

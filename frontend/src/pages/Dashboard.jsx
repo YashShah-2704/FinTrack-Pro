@@ -71,71 +71,74 @@ function Dashboard() {
     return (
         <MainLayout>
 
-        <div style={{ padding: "30px" }}>
 
             <DashboardHeader />
 
-            <br />
 
-            <div
-                style={{
-                    display: "flex",
-                    gap: "20px",
-                    flexWrap: "wrap"
-                }}
-            >
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
 
                 <SummaryCard
 
-                    title="Balance"
+                title="Total Balance"
 
-                    value={`₹${dashboard.balance}`}
+                value={`₹${dashboard.balance}`}
+
+                color="text-blue-600"
 
                 />
 
                 <SummaryCard
 
-                    title="Income"
+                title="Income"
 
-                    value={`₹${dashboard.totalIncome}`}
+                value={`₹${dashboard.totalIncome}`}
 
-                />
-
-                <SummaryCard
-
-                    title="Expense"
-
-                    value={`₹${dashboard.totalExpense}`}
+                color="text-green-600"
 
                 />
 
                 <SummaryCard
 
-                    title="Transactions"
+                title="Expenses"
 
-                    value={dashboard.totalTransactions}
+                value={`₹${dashboard.totalExpense}`}
 
+                color="text-red-600"
+
+                />
+
+                <SummaryCard
+
+                title="Transactions"
+
+                value={dashboard.totalTransactions}
+
+                color="text-purple-600"
+
+                />
+            </div>
+
+            <div className="bg-white rounded-xl shadow-md p-6 mt-8">
+
+                <CategoryPieChart />
+
+            </div>
+
+            
+            <div className="bg-white rounded-xl shadow-md p-6 mt-8">
+
+                <MonthlyChart />
+
+            </div>
+
+            <div className="bg-white rounded-xl shadow-md p-6 mt-8">
+
+                <RecentTransactions
+                    transactions={dashboard.recentTransactions}
                 />
 
             </div>
 
-            <br />
-
-            <CategoryPieChart />
-
-            <br />
-
-            <MonthlyChart />
-
-            <br />
-
-            <RecentTransactions
-
-    transactions={dashboard.recentTransactions}
-
-/>
-
-        </div>
 
         </MainLayout>
 
