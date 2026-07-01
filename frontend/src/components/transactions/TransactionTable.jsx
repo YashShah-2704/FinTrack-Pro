@@ -3,7 +3,8 @@ import TransactionRow from "./TransactionRow";
 function TransactionTable({
 
     transactions,
-    onEdit
+    onEdit,
+    onDelete
 
 }) {
 
@@ -15,43 +16,53 @@ function TransactionTable({
 
     return (
 
-        <table
-            border="1"
-            cellPadding="10"
-            style={{
+        <div className="bg-white rounded-xl shadow-lg overflow-hidden">
 
-                width: "100%",
+            <table className="min-w-full">
 
-                borderCollapse: "collapse"
+                <thead className="bg-slate-100">
 
-            }}
-        >
+                    <tr>
 
-            <thead>
+                        <th className="text-left px-6 py-4">
 
-                <tr>
+                            Date
 
-                    <th>Date</th>
+                        </th>
 
-                    <th>Category</th>
+                        <th className="text-left px-6 py-4">
 
-                    <th>Type</th>
+                            Category
 
-                    <th>Amount</th>
+                        </th>
 
-                    <th>Actions</th>
+                        <th className="text-left px-6 py-4">
 
-                </tr>
+                            Type
 
-            </thead>
+                        </th>
 
-            <tbody>
+                        <th className="text-left px-6 py-4">
 
-                {
+                            Amount
 
-                    transactions.map(
+                        </th>
 
-                        (transaction) => (
+                        <th className="text-left px-6 py-4">
+
+                            Actions
+
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    {
+
+                        transactions.map((transaction)=>(
 
                             <TransactionRow
 
@@ -61,17 +72,19 @@ function TransactionTable({
 
                                 onEdit={onEdit}
 
+                                onDelete={onDelete}
+
                             />
 
-                        )
+                        ))
 
-                    )
+                    }
 
-                }
+                </tbody>
 
-            </tbody>
+            </table>
 
-        </table>
+        </div>
 
     );
 

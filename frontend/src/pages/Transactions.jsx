@@ -147,18 +147,37 @@ function Transactions() {
             style={{ padding: "30px" }}
         >
 
-            <h1>
+            <div className="flex justify-between items-center mb-8">
 
-                Transactions
+                <div>
 
-            </h1>
-            <button onClick={() => setShowModal(true)}>
+                    <h1 className="text-4xl font-bold">
 
-                + Add Transaction
+                        Transactions
 
-            </button>
+                    </h1>
 
-            <br /><br />
+                    <p className="text-gray-500 mt-2">
+
+                        Manage all your income and expenses.
+
+                    </p>
+
+                </div>
+
+                <button
+
+                    onClick={() => setShowModal(true)}
+
+                    className="bg-blue-600 text-white px-5 py-3 rounded-lg hover:bg-blue-700"
+
+                >
+
+                    + Add Transaction
+
+                </button>
+
+            </div>
 
             <TransactionTable
 
