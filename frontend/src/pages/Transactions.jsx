@@ -13,6 +13,9 @@ import TransactionTable from "../components/transactions/TransactionTable";
 import TransactionModal from "../components/transactions/TransactionModal";
 
 import DeleteModal from "../components/transactions/DeleteModal";
+
+import SearchBar from "../components/transactions/SearchBar";
+
 import { deleteTransaction } from "../services/transactionService";
 
 function Transactions() {
@@ -25,6 +28,8 @@ function Transactions() {
 
     const [transactions, setTransactions] =
         useState([]);
+
+    const [searchTerm, setSearchTerm] = useState("");
 
     const [loading, setLoading] =
         useState(true);
@@ -135,6 +140,40 @@ function Transactions() {
 
     };
 
+    const filteredTransactions = transactions.filter(
+
+        (transaction)=>{
+
+            return (
+
+                transaction.category
+
+                .toLowerCase()
+
+                .includes(
+
+                    searchTerm.toLowerCase()
+
+                )
+
+                ||
+
+                transaction.note
+
+                ?.toLowerCase()
+
+                .includes(
+
+                    searchTerm.toLowerCase()
+
+                )
+
+            );
+
+        }
+
+    );
+
     if (loading)
         return <h2>Loading...</h2>;
 
@@ -178,10 +217,21 @@ function Transactions() {
                 </button>
 
             </div>
+            <div className="mb-6">
+
+                <SearchBar
+
+                    value={searchTerm}
+
+                    onChange={setSearchTerm}
+
+                />
+
+            </div>
 
             <TransactionTable
 
-                transactions={transactions}
+                transactions={filteredTransactions}
 
                 onEdit={(transaction)=>{
 
