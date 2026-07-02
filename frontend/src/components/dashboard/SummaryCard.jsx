@@ -1,28 +1,105 @@
+import {
+    FaWallet,
+    FaArrowTrendUp,
+    FaArrowTrendDown,
+    FaReceipt
+} from "react-icons/fa6";
+
 function SummaryCard({
 
     title,
 
-    value,
-
-    color
+    value
 
 }) {
 
+    const config = {
+
+        "Total Balance": {
+
+            icon: <FaWallet size={24} />,
+
+            bg: "bg-blue-100",
+
+            color: "text-blue-600"
+
+        },
+
+        "Income": {
+
+            icon: <FaArrowTrendUp size={24} />,
+
+            bg: "bg-green-100",
+
+            color: "text-green-600"
+
+        },
+
+        "Expenses": {
+
+            icon: <FaArrowTrendDown size={24} />,
+
+            bg: "bg-red-100",
+
+            color: "text-red-600"
+
+        },
+
+        "Transactions": {
+
+            icon: <FaReceipt size={24} />,
+
+            bg: "bg-purple-100",
+
+            color: "text-purple-600"
+
+        }
+
+    };
+
+    const item = config[title];
+
     return (
 
-        <div className="bg-white rounded-xl shadow-md p-6 flex-1 hover:shadow-xl transition">
+        <div
 
-            <p className="text-gray-500 text-sm">
+            className="bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 p-6"
 
-                {title}
+        >
 
-            </p>
+            <div className="flex justify-between items-start">
 
-            <h2 className={`text-3xl font-bold mt-3 ${color}`}>
+                <div>
 
-                {value}
+                    <p className="text-gray-500 text-sm">
 
-            </h2>
+                        {title}
+
+                    </p>
+
+                    <h2
+
+                        className={`text-3xl font-bold mt-3 ${item.color}`}
+
+                    >
+
+                        {value}
+
+                    </h2>
+
+                </div>
+
+                <div
+
+                    className={`${item.bg} ${item.color} p-4 rounded-full`}
+
+                >
+
+                    {item.icon}
+
+                </div>
+
+            </div>
 
         </div>
 

@@ -16,41 +16,33 @@ function TransactionModal({
 
     return (
 
-        <div
-            style={{
-                position: "fixed",
-                inset: 0,
-                background: "rgba(0,0,0,0.5)",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center"
-            }}
-        >
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
 
-            <div
-                style={{
-                    background: "white",
-                    padding: "20px",
-                    borderRadius: "10px",
-                    width: "400px"
-                }}
-            >
+            <div className="bg-white rounded-2xl shadow-2xl w-full max-w-lg p-8">
 
-                <h2>
+                <div className="flex justify-between items-center mb-6">
 
-                    {
+                    <h2 className="text-2xl font-bold">
 
-                        initialData._id ?
+                        {initialData._id
+                            ? "Edit Transaction"
+                            : "Add Transaction"}
 
-                        "Edit Transaction"
+                    </h2>
 
-                        :
+                    <button
 
-                        "Add Transaction"
+                        onClick={onClose}
 
-                    }
+                        className="text-gray-500 hover:text-red-500 text-xl"
 
-                </h2>
+                    >
+
+                        ✕
+
+                    </button>
+
+                </div>
 
                 <TransactionForm
 
@@ -58,15 +50,9 @@ function TransactionModal({
 
                     onSubmit={onSubmit}
 
+                    onCancel={onClose}
+
                 />
-
-                <br />
-
-                <button onClick={onClose}>
-
-                    Close
-
-                </button>
 
             </div>
 

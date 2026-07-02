@@ -70,7 +70,8 @@ function Dashboard() {
 
     return (
         <MainLayout>
-
+   
+            <div className="space-y-8">
 
             <DashboardHeader />
 
@@ -83,7 +84,7 @@ function Dashboard() {
 
                 value={`₹${dashboard.balance}`}
 
-                color="text-blue-600"
+                
 
                 />
 
@@ -93,7 +94,6 @@ function Dashboard() {
 
                 value={`₹${dashboard.totalIncome}`}
 
-                color="text-green-600"
 
                 />
 
@@ -103,7 +103,6 @@ function Dashboard() {
 
                 value={`₹${dashboard.totalExpense}`}
 
-                color="text-red-600"
 
                 />
 
@@ -112,8 +111,6 @@ function Dashboard() {
                 title="Transactions"
 
                 value={dashboard.totalTransactions}
-
-                color="text-purple-600"
 
                 />
             </div>
@@ -126,6 +123,11 @@ function Dashboard() {
 
             
             <div className="bg-white rounded-xl shadow-md p-6 mt-8">
+                <h2 className="text-2xl font-bold mb-6">
+
+                    Monthly Income vs Expense
+
+                </h2>
 
                 <MonthlyChart />
 
@@ -139,7 +141,7 @@ function Dashboard() {
 
             </div>
 
-
+        </div>
         </MainLayout>
 
     );

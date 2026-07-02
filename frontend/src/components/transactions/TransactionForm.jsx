@@ -1,18 +1,42 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-function TransactionForm({ onSubmit, initialData = {} }) {
+function TransactionForm({
+    onSubmit,
+    initialData = {},
+    onCancel
+}) {
 
     const [formData, setFormData] = useState({
-        type: initialData.type || "expense",
-        amount: initialData.amount || "",
-        category: initialData.category || "",
-        note: initialData.note || "",
-        paymentMethod: initialData.paymentMethod || "UPI",
-        transactionDate:
-            initialData.transactionDate
-                ? initialData.transactionDate.slice(0, 10)
-                : new Date().toISOString().slice(0, 10)
+        type: "expense",
+        amount: "",
+        category: "",
+        note: "",
+        paymentMethod: "UPI",
+        transactionDate: new Date().toISOString().slice(0, 10)
     });
+
+    useEffect(() => {
+
+        setFormData({
+
+            type: initialData.type || "expense",
+
+            amount: initialData.amount || "",
+
+            category: initialData.category || "",
+
+            note: initialData.note || "",
+
+            paymentMethod: initialData.paymentMethod || "UPI",
+
+            transactionDate:
+                initialData.transactionDate
+                    ? initialData.transactionDate.slice(0, 10)
+                    : new Date().toISOString().slice(0, 10)
+
+        });
+
+    }, [initialData]);
 
     const handleChange = (e) => {
 
@@ -36,120 +60,171 @@ function TransactionForm({ onSubmit, initialData = {} }) {
 
     return (
 
-        <form onSubmit={handleSubmit}>
+        <form
+            onSubmit={handleSubmit}
+            className="space-y-5"
+        >
 
-            <label>Type</label>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
 
-            <br />
+                <div>
 
-            <select
-                name="type"
-                value={formData.type}
-                onChange={handleChange}
-            >
+                    <label className="block mb-2 font-medium">
 
-                <option value="income">Income</option>
+                        Type
 
-                <option value="expense">Expense</option>
+                    </label>
 
-            </select>
+                    <select
+                        name="type"
+                        value={formData.type}
+                        onChange={handleChange}
+                        className="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 outline-none"
+                    >
 
-            <br /><br />
+                        <option value="income">
 
-            <label>Amount</label>
+                            Income
 
-            <br />
+                        </option>
 
-            <input
+                        <option value="expense">
 
-                type="number"
+                            Expense
 
-                name="amount"
+                        </option>
 
-                value={formData.amount}
+                    </select>
 
-                onChange={handleChange}
+                </div>
 
-            />
+                <div>
 
-            <br /><br />
+                    <label className="block mb-2 font-medium">
 
-            <label>Category</label>
+                        Category
 
-            <br />
+                    </label>
 
-            <input
+                    <input
+                        name="category"
+                        value={formData.category}
+                        onChange={handleChange}
+                        className="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 outline-none"
+                    />
 
-                name="category"
+                </div>
 
-                value={formData.category}
+                <div>
 
-                onChange={handleChange}
+                    <label className="block mb-2 font-medium">
 
-            />
+                        Amount
 
-            <br /><br />
+                    </label>
 
-            <label>Note</label>
+                    <input
+                        type="number"
+                        name="amount"
+                        value={formData.amount}
+                        onChange={handleChange}
+                        className="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 outline-none"
+                    />
 
-            <br />
+                </div>
 
-            <input
+                <div>
 
-                name="note"
+                    <label className="block mb-2 font-medium">
 
-                value={formData.note}
+                        Payment Method
 
-                onChange={handleChange}
+                    </label>
 
-            />
+                    <select
+                        name="paymentMethod"
+                        value={formData.paymentMethod}
+                        onChange={handleChange}
+                        className="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 outline-none"
+                    >
 
-            <br /><br />
+                        <option>UPI</option>
+                        <option>Cash</option>
+                        <option>Credit Card</option>
+                        <option>Debit Card</option>
+                        <option>Bank Transfer</option>
 
-            <label>Payment Method</label>
+                    </select>
 
-            <br />
+                </div>
 
-            <select
-                name="paymentMethod"
-                value={formData.paymentMethod}
-                onChange={handleChange}
-            >
+            </div>
 
-                <option>UPI</option>
-                <option>Cash</option>
-                <option>Credit Card</option>
-                <option>Debit Card</option>
-                <option>Bank Transfer</option>
-                <option>Other</option>
+            <div>
 
-            </select>
+                <label className="block mb-2 font-medium">
 
-            <br /><br />
+                    Date
 
-            <label>Date</label>
+                </label>
 
-            <br />
+                <input
+                    type="date"
+                    name="transactionDate"
+                    value={formData.transactionDate}
+                    onChange={handleChange}
+                    className="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 outline-none"
+                />
 
-            <input
+            </div>
 
-                type="date"
+            <div>
 
-                name="transactionDate"
+                <label className="block mb-2 font-medium">
 
-                value={formData.transactionDate}
+                    Note
 
-                onChange={handleChange}
+                </label>
 
-            />
+                <textarea
+                    rows="3"
+                    name="note"
+                    value={formData.note}
+                    onChange={handleChange}
+                    className="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 outline-none"
+                />
 
-            <br /><br />
+            </div>
 
-            <button type="submit">
+            <div className="flex justify-end gap-4">
 
-                Save Transaction
+                <button
 
-            </button>
+                    type="button"
+
+                    onClick={onCancel}
+
+                    className="px-5 py-3 rounded-lg border"
+
+                >
+
+                    Cancel
+
+                </button>
+
+                <button
+
+                    type="submit"
+
+                    className="px-6 py-3 rounded-lg bg-blue-600 text-white hover:bg-blue-700"
+
+                >
+
+                    Save Transaction
+
+                </button>
+
+            </div>
 
         </form>
 

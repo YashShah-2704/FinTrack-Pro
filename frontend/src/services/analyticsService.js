@@ -17,3 +17,12 @@ export const getCategoryAnalytics = async () => {
     return response.data;
 
 };
+
+export const getMonthlyAnalytics = async () => {
+
+    const response =
+        await api.get("/analytics/monthly");
+
+    return response.data;
+
+};

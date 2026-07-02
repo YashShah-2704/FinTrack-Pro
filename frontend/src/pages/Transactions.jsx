@@ -19,6 +19,10 @@ import FilterBar from "../components/transactions/FilterBar";
 
 import { deleteTransaction } from "../services/transactionService";
 
+import Pagination from "../components/transactions/Pagination";
+
+import { toast } from "react-toastify";
+
 function Transactions() {
 
     const [showModal, setShowModal] = useState(false);
@@ -26,6 +30,12 @@ function Transactions() {
     const [showDeleteModal, setShowDeleteModal] = useState(false);
 
     const [selectedTransaction, setSelectedTransaction] = useState(null);
+
+    const [page, setPage] = useState(1);
+
+    const [totalPages, setTotalPages] = useState(1);
+
+    const limit = 10;
 
     const [transactions, setTransactions] =
         useState([]);
@@ -45,18 +55,41 @@ function Transactions() {
 
         loadTransactions();
 
-    }, []);
+    }, [
+
+        page,
+
+        searchTerm,
+
+        typeFilter,
+
+        categoryFilter
+
+    ]);
 
     const loadTransactions = async () => {
 
         try {
 
-            const data =
-                await getTransactions();
+            const data = await getTransactions({
+
+                page,
+
+                limit,
+
+                search: searchTerm,
+
+                type: typeFilter,
+
+                category: categoryFilter
+
+            });
 
             setTransactions(
                 data.transactions
             );
+
+            setTotalPages(data.totalPages);
 
         }
 
@@ -80,6 +113,8 @@ function Transactions() {
 
             await addTransaction(formData);
 
+            toast.success("Transaction added successfully!");
+
             setShowModal(false);
 
             await loadTransactions();
@@ -88,6 +123,7 @@ function Transactions() {
 
         catch (err) {
 
+            toast.error("Failed to add transaction.");
             console.error(err);
 
         }
@@ -106,6 +142,8 @@ function Transactions() {
 
             );
 
+            toast.success("Transaction updated successfully!");
+
             setSelectedTransaction(null);
 
             setShowModal(false);
@@ -116,6 +154,7 @@ function Transactions() {
 
         catch (err) {
 
+            toast.error("Failed to update transaction.");
             console.error(err);
 
         }
@@ -128,6 +167,8 @@ function Transactions() {
 
             await deleteTransaction(selectedTransaction._id);
 
+            toast.success("Transaction deleted successfully!");
+
             setShowDeleteModal(false);
 
             setSelectedTransaction(null);
@@ -138,6 +179,7 @@ function Transactions() {
 
         catch (err) {
 
+            toast.error("Failed to delete transaction.");
             console.error(err);
 
         }
@@ -158,51 +200,6 @@ function Transactions() {
 
     ];
 
-    const filteredTransactions = transactions.filter(
-
-        (transaction)=>{
-
-            const matchesSearch=
-
-                transaction.category
-
-                .toLowerCase()
-
-                .includes(searchTerm.toLowerCase())
-
-                ||
-
-                transaction.note
-
-                ?.toLowerCase()
-
-                .includes(searchTerm.toLowerCase());
-
-            const matchesType=
-
-                !typeFilter ||
-
-                transaction.type===typeFilter;
-
-            const matchesCategory=
-
-                !categoryFilter ||
-
-                transaction.category===categoryFilter;
-
-            return(
-
-                matchesSearch &&
-
-                matchesType &&
-
-                matchesCategory
-
-            );
-
-        }
-
-    );
 
     if (loading)
         return <h2>Loading...</h2>;
@@ -257,7 +254,10 @@ function Transactions() {
 
                             value={searchTerm}
 
-                            onChange={setSearchTerm}
+                            onChange={(value) => {
+                                setSearchTerm(value);
+                                setPage(1);
+                            }}
 
                         />
 
@@ -267,11 +267,23 @@ function Transactions() {
 
                         typeFilter={typeFilter}
 
-                        setTypeFilter={setTypeFilter}
+                        setTypeFilter={(value) => {
+
+                            setTypeFilter(value);
+
+                            setPage(1);
+
+                        }}
 
                         categoryFilter={categoryFilter}
 
-                        setCategoryFilter={setCategoryFilter}
+                        setCategoryFilter={(value) => {
+
+                            setCategoryFilter(value);
+
+                            setPage(1);
+
+                        }}
 
                         categories={categories}
 
@@ -283,7 +295,7 @@ function Transactions() {
 
             <TransactionTable
 
-                transactions={filteredTransactions}
+                transactions={transactions}
 
                 onEdit={(transaction)=>{
 
@@ -300,6 +312,16 @@ function Transactions() {
                     setShowDeleteModal(true);
 
                 }}
+
+            />
+
+            <Pagination
+
+                currentPage={page}
+
+                totalPages={totalPages}
+
+                onPageChange={setPage}
 
             />
 
@@ -327,6 +349,22 @@ function Transactions() {
                     handleAddTransaction
 
                 }
+
+            />
+
+            <DeleteModal
+
+                open={showDeleteModal}
+
+                onClose={() => {
+
+                    setShowDeleteModal(false);
+
+                    setSelectedTransaction(null);
+
+                }}
+
+                onConfirm={handleDeleteTransaction}
 
             />
 

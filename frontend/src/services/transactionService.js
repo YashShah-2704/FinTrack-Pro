@@ -9,12 +9,17 @@ export const getTransactions = async (params = {}) => {
 };
 
 export const addTransaction = async (transaction) => {
+
     const response = await api.post(
+
         "/transactions",
+
         transaction
+
     );
 
     return response.data;
+
 };
 
 export const updateTransaction = async (
